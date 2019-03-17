@@ -3,7 +3,7 @@ function startDataUpload(){
 	var surname=document.getElementById("surname").value;
 	var module=document.getElementById("module").value;
 	var postString="name=" + name + "&surname=" + surname + "&module=" + module;
-	alert(postString);
+	
 	//now get the checkbox values-separate them with a | so that they
 	//can be split later on if necessary
 	var checkString="";
@@ -30,6 +30,7 @@ function startDataUpload(){
 	var latitude=document.getElementById("latitude").value;
 	var longitude=document.getElementById("longitude").value;
 	postString=postString + "&latitude=" + latitude + "&longitude=" + longitude; 
+	alert(postString);
 	processData(postString);
 }
 
@@ -37,7 +38,9 @@ var client; //the global variable that holds the request
 
 function processData(postString){
 	client=new XMLHttpRequest();
-	client.open('POST','http://developer.cege.ucl.ac.uk:30276/reflectData', true);
+	var url = 'http://developer.cege.ucl.ac.uk:30276/reflectData'
+	alert(url);
+	client.open('POST',url, true);
 	client.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	client.onreadystatechange=dataUploaded;
 	client.send(postString);
@@ -48,6 +51,7 @@ function dataUploaded(){
 	//this function listens out for the server to say that the data is ready-i.e. has state 4
 	if (client.readyState==4){
 		//change the DIV to show the response
-		document.getElementById("dataUploadResult").innerHTML = client.repsonseText;
+		alert(client.responseText);
+		document.getElementById("dataUploadResult").innerHTML = client.responseText;
 	}
 }
